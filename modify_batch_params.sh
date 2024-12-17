@@ -39,7 +39,7 @@ function apply_modifications {
   docker exec cli sh -c "jq '.channel_group.groups.Orderer.values.BatchSize.value.max_message_count = $NEW_MAX_MESSAGE_COUNT' config.json > modified_config.json"
 
   echo "Updating Batch Timeout to $NEW_BATCH_TIMEOUT..."
-  docker exec cli sh -c "jq '.channel_group.groups.Orderer.values.BatchTimeout.value.timeout = \"$NEW_BATCH_TIMEOUT\"' modified_config.json > final_modified_config.json"
+  docker exec cli sh -c "jq '.channel_group.groups.Orderer.values.BatchTimeout.value.timeout = \"${NEW_BATCH_TIMEOUT}s\"' modified_config.json > final_modified_config.json"
 
   echo "Converting JSON to ProtoBuf..."
   docker exec cli sh -c 'configtxlator proto_encode --input config.json --type common.Config --output config.pb'
